@@ -461,6 +461,12 @@ func (cli *Client) SendImage(roomID, body, url string) (*RespSendEvent, error) {
 		})
 }
 
+// SendHTML sends an m.room.message event into the given room with a msgtype of m.text or / m.notice
+// Not currently documented in the matrix.org specs
+func (cli *Client) SendHTML(roomID, body, html string, msgType string) (*RespSendEvent, error) {
+	return cli.SendMessageEvent(roomID, "m.room.message", GetHTMLMessage(msgType, html))
+}
+
 // SendVideo sends an m.room.message event into the given room with a msgtype of m.video
 // See https://matrix.org/docs/spec/client_server/r0.2.0.html#m-video
 func (cli *Client) SendVideo(roomID, body, url string) (*RespSendEvent, error) {
