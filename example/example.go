@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 	"log"
-	"github.com/matrix-org/gomatrix"
+	"github.com/donomii/gomatrix"
 	"fmt"
 )
 
