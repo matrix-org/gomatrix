@@ -591,10 +591,10 @@ func (cli *Client) UploadLink(link string) (*RespMediaUpload, error) {
 	return cli.UploadToContentRepo(res.Body, res.Header.Get("Content-Type"), res.ContentLength)
 }
 
-// Download download a mxc url
+// Download download a mxc url.  Used to get sent file/photos/etc from the matrix server
 func (cli *Client) Download(url string) (string, []byte, error) {
 	path := strings.Replace(url, "mxc://", "", 1)
-	req, err := http.NewRequest("GET", cli.BuildBaseURL("_matrix/media/r0/download/"+path), nil)
+	req, _ := http.NewRequest("GET", cli.BuildBaseURL("_matrix/media/r0/download/"+path), nil)
 
 	res, err := cli.Client.Do(req)
 	if err != nil {
@@ -604,7 +604,6 @@ func (cli *Client) Download(url string) (string, []byte, error) {
 	defer res.Body.Close()
 
 	contents, err := ioutil.ReadAll(res.Body)
-	fmt.Println(res.Header)
 	filename := res.Header["Content-Disposition"][0]
 	if err != nil {
 		fmt.Println("Error while downloading", url, "-", err)
