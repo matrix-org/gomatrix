@@ -450,6 +450,21 @@ func (cli *Client) SendText(roomID, text string) (*RespSendEvent, error) {
 		TextMessage{"m.text", text})
 }
 
+// SendFile sends an m.room.message event into the given room with a msgtype of m.file
+// See https://matrix.org/docs/spec/client_server/r0.2.0.html#m-file
+// FIXME add thumbnail support
+func (cli *Client) SendFile(roomID, body, url, filename string, info FileInfo, thumb_info, thumb_url interface{}) (*RespSendEvent, error) {
+	return cli.SendMessageEvent(roomID, "m.room.message",
+		FileMessage{
+			MsgType:  "m.file",
+			Body:     body,
+			URL:      url,
+			FileName: filename,
+			Info:	  info,
+		})
+}
+
+
 // SendImage sends an m.room.message event into the given room with a msgtype of m.image
 // See https://matrix.org/docs/spec/client_server/r0.2.0.html#m-image
 func (cli *Client) SendImage(roomID, body, url string) (*RespSendEvent, error) {
