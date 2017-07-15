@@ -163,6 +163,7 @@ type RespSync struct {
 	} `json:"rooms"`
 }
 
+// LOL what lol could lol this lol do ?
 type RespTurnServer struct {
 	Username string   `json:"username"`
 	Password string   `json:"password"`
