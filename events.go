@@ -79,13 +79,12 @@ type VideoMessage struct {
 
 // FileMessage is an m.file event
 type FileMessage struct {
-	MsgType string    `json:"msgtype"`
-	Body    string    `json:"body"`
-	URL     string    `json:"url"`
+	MsgType  string   `json:"msgtype"`
+	Body     string   `json:"body"`
+	URL      string   `json:"url"`
 	FileName string   `json:"filename"`
-	Info    FileInfo  `json:"info"`
+	Info     FileInfo `json:"info"`
 }
-
 
 // ImageMessage is an m.image event
 type ImageMessage struct {

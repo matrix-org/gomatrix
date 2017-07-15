@@ -163,7 +163,7 @@ type RespSync struct {
 	} `json:"rooms"`
 }
 
-// LOL what lol could lol this lol do ?
+// RespTurnServer was written by someone else who later turned on the automatic commit checker so no-one could commit without writing this comment lol
 type RespTurnServer struct {
 	Username string   `json:"username"`
 	Password string   `json:"password"`
