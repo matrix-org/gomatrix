@@ -86,17 +86,19 @@ type HTMLMessage struct {
 	Format        string `json:"format"`
 	FormattedBody string `json:"formatted_body"`
 }
+
 // An FileMessage is the contents of a MATRIX File upload
 type FileMessage struct {
-	Body          string `json:"body"`
-	MsgType       string `json:"msgtype"`
-	URL     string    `json:"url"`
+	Body    string   `json:"body"`
+	MsgType string   `json:"msgtype"`
+	URL     string   `json:"url"`
 	Info    FileInfo `json:"info"`
 }
 
+// FileInfo contains information about a file
 type FileInfo struct {
 	MimeType string `json:"mimetype"`
-	Size int64 `json:size"` 
+	Size     int64  `json:size"`
 }
 
 var htmlRegex = regexp.MustCompile("<[^<]+?>")
