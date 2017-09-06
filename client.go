@@ -486,7 +486,7 @@ func (cli *Client) SendVideo(roomID, body, url string) (*RespSendEvent, error) {
 		})
 }
 
-// SendImage send an m.room.message event intor the given room with a msgtyope of m.file
+// SendFile send an m.room.message event intor the given room with a msgtyope of m.file
 // See https://matrix.org/docs/spec/client_server/r0.2.0.html#m-file
 func (cli *Client) SendFile(roomID, body, url string) (*RespSendEvent, error) {
 	return cli.SendMessageEvent(roomID, "m.room.message",

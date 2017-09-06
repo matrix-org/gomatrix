@@ -168,6 +168,7 @@ type RespSync struct {
 	} `json:"rooms"`
 }
 
+// RespTurnServer have information about the Rurtn Server Authentication
 type RespTurnServer struct {
 	Username string   `json:"username"`
 	Password string   `json:"password"`

@@ -98,7 +98,7 @@ type FileMessage struct {
 // FileInfo contains information about a file
 type FileInfo struct {
 	MimeType string `json:"mimetype"`
-	Size     int64  `json:size"`
+	Size     int64  `json:"size"`
 }
 
 var htmlRegex = regexp.MustCompile("<[^<]+?>")
