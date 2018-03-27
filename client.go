@@ -281,7 +281,14 @@ func (cli *Client) register(u string, req *ReqRegister) (resp *RespRegister, uia
 		}
 		if httpErr.Code == 401 {
 			// body should be RespUserInteractive, if it isn't, fail with the error
-			err = json.Unmarshal(bodyBytes, &uiaResp)
+			err2 := json.Unmarshal(bodyBytes, &uiaResp)
+			if err2 != nil {
+				err = err2
+				return
+			}
+			if len(uiaResp.Flows) > 0 {
+				err = nil // We successfully unmarshalled into uiaresp so any HTTP errors can be discarded
+			}
 			return
 		}
 		return
