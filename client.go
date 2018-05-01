@@ -701,3 +701,28 @@ func NewClient(homeserverURL, userID, accessToken string) (*Client, error) {
 
 	return &cli, nil
 }
+
+// NewClientWithHTTPClient creates a new Matrix Client ready for syncing, using
+// the supplied HTTP client.
+func NewClientWithHTTPClient(homeserverURL, userID, accessToken string, client *http.Client) (*Client, error) {
+	hsURL, err := url.Parse(homeserverURL)
+	if err != nil {
+		return nil, err
+	}
+	// By default, use an in-memory store which will never save filter ids / next batch tokens to disk.
+	// The client will work with this storer: it just won't remember across restarts.
+	// In practice, a database backend should be used.
+	store := NewInMemoryStore()
+	cli := Client{
+		AccessToken:   accessToken,
+		HomeserverURL: hsURL,
+		UserID:        userID,
+		Prefix:        "/_matrix/client/r0",
+		Syncer:        NewDefaultSyncer(userID, store),
+		Store:         store,
+	}
+	// By default, use the default HTTP client.
+	cli.Client = client
+
+	return &cli, nil
+}
