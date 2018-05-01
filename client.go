@@ -529,7 +529,7 @@ func (cli *Client) ForgetRoom(roomID string) (resp *RespForgetRoom, err error) {
 // InviteUser invites a user to a room. See http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-invite
 func (cli *Client) InviteUser(roomID string, req *ReqInviteUser) (resp *RespInviteUser, err error) {
 	u := cli.BuildURL("rooms", roomID, "invite")
-	_, err = cli.MakeRequest("POST", u, struct{}{}, &resp)
+	_, err = cli.MakeRequest("POST", u, req, &resp)
 	return
 }
 
@@ -698,6 +698,31 @@ func NewClient(homeserverURL, userID, accessToken string) (*Client, error) {
 	}
 	// By default, use the default HTTP client.
 	cli.Client = http.DefaultClient
+
+	return &cli, nil
+}
+
+// NewClientWithHTTPClient creates a new Matrix Client ready for syncing, using
+// the supplied HTTP client.
+func NewClientWithHTTPClient(homeserverURL, userID, accessToken string, client *http.Client) (*Client, error) {
+	hsURL, err := url.Parse(homeserverURL)
+	if err != nil {
+		return nil, err
+	}
+	// By default, use an in-memory store which will never save filter ids / next batch tokens to disk.
+	// The client will work with this storer: it just won't remember across restarts.
+	// In practice, a database backend should be used.
+	store := NewInMemoryStore()
+	cli := Client{
+		AccessToken:   accessToken,
+		HomeserverURL: hsURL,
+		UserID:        userID,
+		Prefix:        "/_matrix/client/r0",
+		Syncer:        NewDefaultSyncer(userID, store),
+		Store:         store,
+	}
+	// By default, use the default HTTP client.
+	cli.Client = client
 
 	return &cli, nil
 }
