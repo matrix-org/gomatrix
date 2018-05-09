@@ -23,11 +23,11 @@ type Filter struct {
 	EventFields []string   `json:"event_fields,omitempty"`
 	EventFormat string     `json:"event_format,omitempty"`
 	Presence    FilterPart `json:"presence,omitempty"`
-	Room        FilterRoom `json:"room,omitempty"`
+	Room        RoomFilter `json:"room,omitempty"`
 }
 
-// FilterRoom is used to define filtering rules for room events
-type FilterRoom struct {
+// RoomFilter is used to define filtering rules for room events
+type RoomFilter struct {
 	AccountData  FilterPart `json:"account_data,omitempty"`
 	Ephemeral    FilterPart `json:"ephemeral,omitempty"`
 	IncludeLeave bool       `json:"include_leave,omitempty"`
@@ -52,7 +52,7 @@ type FilterPart struct {
 // Validate checks if the filter contains valid property values
 func (filter *Filter) Validate() error {
 	if filter.EventFormat != "client" && filter.EventFormat != "federation" {
-		return errors.New("Bad event_format value. Must be any of [\"client\", \"federation\"]")
+		return errors.New("Bad event_format value. Must be one of [\"client\", \"federation\"]")
 	}
 	return nil
 }
@@ -64,7 +64,7 @@ func DefaultFilter() Filter {
 		EventFields: nil,
 		EventFormat: "client",
 		Presence:    DefaultFilterPart(),
-		Room: FilterRoom{
+		Room: RoomFilter{
 			AccountData:  DefaultFilterPart(),
 			Ephemeral:    DefaultFilterPart(),
 			IncludeLeave: false,
