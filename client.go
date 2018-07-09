@@ -496,9 +496,9 @@ func (cli *Client) SendNotice(roomID, text string) (*RespSendEvent, error) {
 // Receipt updates the marker for the given receipt type to the event ID specified.
 // See https://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-receipt-receipttype-eventid
 func (cli *Client) Receipt(roomID, receiptType, eventID string, req *ReqReceipt) (resp *RespReceipt, err error) {
-       urlPath := cli.BuildURL("rooms", roomID, "receipt", receiptType, eventID)
-       _, err = cli.MakeRequest("POST", urlPath, req, nil)
-       return
+	urlPath := cli.BuildURL("rooms", roomID, "receipt", receiptType, eventID)
+	_, err = cli.MakeRequest("POST", urlPath, req, nil)
+	return
 }
 
 
