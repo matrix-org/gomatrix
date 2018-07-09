@@ -493,6 +493,15 @@ func (cli *Client) SendNotice(roomID, text string) (*RespSendEvent, error) {
 		TextMessage{"m.notice", text})
 }
 
+// Receipt updates the marker for the given receipt type to the event ID specified.
+// See https://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-receipt-receipttype-eventid
+func (cli *Client) Receipt(roomID, receiptType, eventID string, req *ReqReceipt) (resp *RespReceipt, err error) {
+       urlPath := cli.BuildURL("rooms", roomID, "receipt", receiptType, eventID)
+       _, err = cli.MakeRequest("POST", urlPath, req, nil)
+       return
+}
+
+
 // RedactEvent redacts the given event. See http://matrix.org/docs/spec/client_server/r0.2.0.html#put-matrix-client-r0-rooms-roomid-redact-eventid-txnid
 func (cli *Client) RedactEvent(roomID, eventID string, req *ReqRedact) (resp *RespSendEvent, err error) {
 	txnID := txnID()

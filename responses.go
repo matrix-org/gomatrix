@@ -174,3 +174,7 @@ type RespTurnServer struct {
 	TTL      int      `json:"ttl"`
 	URIs     []string `json:"uris"`
 }
+
+// RespReceipt is the JSON response for https://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-receipt-receipttype-eventid
+type RespReceipt struct {
+}
