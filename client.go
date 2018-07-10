@@ -501,7 +501,6 @@ func (cli *Client) Receipt(roomID, receiptType, eventID string, req *ReqReceipt)
 	return
 }
 
-
 // RedactEvent redacts the given event. See http://matrix.org/docs/spec/client_server/r0.2.0.html#put-matrix-client-r0-rooms-roomid-redact-eventid-txnid
 func (cli *Client) RedactEvent(roomID, eventID string, req *ReqRedact) (resp *RespSendEvent, err error) {
 	txnID := txnID()
