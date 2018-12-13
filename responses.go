@@ -84,7 +84,7 @@ type RespUserInteractive struct {
 		Stages []string `json:"stages"`
 	} `json:"flows"`
 	Params    map[string]interface{} `json:"params"`
-	Session   string                 `json:"string"`
+	Session   string                 `json:"session"`
 	Completed []string               `json:"completed"`
 	ErrCode   string                 `json:"errcode"`
 	Error     string                 `json:"error"`
