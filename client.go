@@ -464,6 +464,16 @@ func (cli *Client) SendText(roomID, text string) (*RespSendEvent, error) {
 		TextMessage{"m.text", text})
 }
 
+// SendHTML sends an m.room.message event into the given room with a msgtype of m.text and using the org.matrix.custom.html formatting.
+// See http://matrix.org/docs/spec/client_server/r0.2.0.html#m-text
+func (cli *Client) SendHTML(roomID, msgtype, htmlText string) (*RespSendEvent, error) {
+	if msgtype == "" {
+		msgtype = "m.text"
+	}
+	return cli.SendMessageEvent(roomID, "m.room.message",
+		GetHTMLMessage(msgtype, htmlText))
+}
+
 // SendImage sends an m.room.message event into the given room with a msgtype of m.image
 // See https://matrix.org/docs/spec/client_server/r0.2.0.html#m-image
 func (cli *Client) SendImage(roomID, body, url string) (*RespSendEvent, error) {
