@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"path"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -68,6 +69,10 @@ func (cli *Client) BuildBaseURL(urlPath ...string) string {
 	parts := []string{hsURL.Path}
 	parts = append(parts, urlPath...)
 	hsURL.Path = path.Join(parts...)
+	// Manually add the trailing slash back to the end of the path if it's explicitely needed
+	if strings.HasSuffix(urlPath[len(urlPath)-1], "/") {
+		hsURL.Path = hsURL.Path + "/"
+	}
 	query := hsURL.Query()
 	if cli.AccessToken != "" {
 		query.Set("access_token", cli.AccessToken)
