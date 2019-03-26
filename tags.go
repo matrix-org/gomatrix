@@ -14,12 +14,13 @@
 
 package gomatrix
 
-// Tag contains the data for a Tag which can be referenced by the Tag name
+// Tag contains the data for an m.tag message type
+// https://matrix.org/docs/spec/client_server/r0.4.0.html#m-tag
 type Tag struct {
 	Tags map[string]TagProperties `json:"tags"`
 }
 
-// TagProperties contains the properties of an MTag
+// TagProperties contains the properties of a Tag
 type TagProperties struct {
 	Order float32 `json:"order,omitempty"` // Empty values must be neglected
 }
