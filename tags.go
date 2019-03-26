@@ -16,7 +16,7 @@ package gomatrix
 
 // Tag contains the data for an m.tag message type
 // https://matrix.org/docs/spec/client_server/r0.4.0.html#m-tag
-type Tag struct {
+type TagContent struct {
 	Tags map[string]TagProperties `json:"tags"`
 }
 
