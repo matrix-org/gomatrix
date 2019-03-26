@@ -1,6 +1,6 @@
 package gomatrix
 
-// Tag contains the data for a Tag which can be referenced by the Tag name
+// Tag contains the data for an m.tag message type
 type Tag struct {
 	Tags map[string]TagProperties `json:"tags"`
 }
