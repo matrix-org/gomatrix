@@ -1,7 +1,6 @@
 package gomatrix
 
 // Tag contains the data for a Tag which can be referenced by the Tag name
-// Tags is based on the Room Tagging feature as described in https://matrix.org/docs/spec/client_server/r0.2.0.html#room-tagging
 type Tag struct {
 	Tags map[string]TagProperties `json:"tags"`
 }
