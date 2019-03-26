@@ -69,7 +69,7 @@ func (cli *Client) BuildBaseURL(urlPath ...string) string {
 	parts := []string{hsURL.Path}
 	parts = append(parts, urlPath...)
 	hsURL.Path = path.Join(parts...)
-	// Manually add the trailing slash back to the end of the path if it's explicitely needed
+	// Manually add the trailing slash back to the end of the path if it's explicitly needed
 	if strings.HasSuffix(urlPath[len(urlPath)-1], "/") {
 		hsURL.Path = hsURL.Path + "/"
 	}
