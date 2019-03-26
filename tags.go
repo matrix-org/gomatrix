@@ -5,7 +5,7 @@ type Tag struct {
 	Tags map[string]TagProperties `json:"tags"`
 }
 
-// TagProperties contains the properties of an MTag
+// TagProperties contains the properties of a Tag
 type TagProperties struct {
 	Order float32 `json:"order,omitempty"` // Empty values must be neglected
 }
