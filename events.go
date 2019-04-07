@@ -73,12 +73,14 @@ type VideoMessage struct {
 	Info    VideoInfo `json:"info"`
 }
 
-// ImageMessage is an m.image event
+// ImageMessage is an m.image event - http://matrix.org/docs/spec/client_server/r0.2.0.html#m-image
 type ImageMessage struct {
-	MsgType string    `json:"msgtype"`
-	Body    string    `json:"body"`
-	URL     string    `json:"url"`
-	Info    ImageInfo `json:"info"`
+	MsgType       string    `json:"msgtype"`
+	Body          string    `json:"body"`
+	URL           string    `json:"url"`
+	Info          ImageInfo `json:"info,omitempty"`
+	ThumbnailURL  string    `json:"thumbnail_url,omitempty"`
+	ThumbnailInfo ImageInfo `json:"thumbnail_info,omitempty"`
 }
 
 // An HTMLMessage is the contents of a Matrix HTML formated message event.
