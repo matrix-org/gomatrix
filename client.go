@@ -188,7 +188,7 @@ func (cli *Client) StopSync() {
 // body is nil.
 //
 // Returns an error if the response is not 2xx along with the HTTP body bytes if it got that far. This error is
-// an HTTPError which includes the returned HTTP status code, byte contents of the response body and possibly a 
+// an HTTPError which includes the returned HTTP status code, byte contents of the response body and possibly a
 // RespError as the WrappedError, if the HTTP body could be decoded as a RespError.
 func (cli *Client) MakeRequest(method string, httpURL string, reqBody interface{}, resBody interface{}) error {
 	var req *http.Request
