@@ -241,7 +241,7 @@ func (cli *Client) MakeRequest(method string, httpURL string, reqBody interface{
 		}
 	}
 
-	if res.ContentLength > 0 {
+	if res.Body != nil {
 		return json.NewDecoder(res.Body).Decode(&resBody)
 	}
 
