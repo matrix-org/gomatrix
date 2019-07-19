@@ -17,10 +17,19 @@ package gomatrix
 // TagContent contains the data for an m.tag message type
 // https://matrix.org/docs/spec/client_server/r0.4.0.html#m-tag
 type TagContent struct {
-	Tags map[string]TagProperties `json:"tags"`
+	Tags map[string]TagProperties `json:"tags,omitemmpty"`
 }
 
 // TagProperties contains the properties of a Tag
 type TagProperties struct {
 	Order float32 `json:"order,omitempty"` // Empty values must be neglected
+}
+
+// TagData contains the entire data returned by the server
+type TagData struct {
+	Content        TagContent
+	EventID        string
+	OriginServerTs int
+	Sender         string
+	Type           string
 }
