@@ -55,7 +55,10 @@ func (e HTTPError) Error() string {
 
 // BuildURL builds a URL with the Client's homserver/prefix/access_token set already.
 func (cli *Client) BuildURL(urlPath ...string) string {
-	ps := []string{cli.Prefix}
+	ps := []string{}
+	if urlPath[0] != "_matrix" {
+		ps = append(ps, cli.Prefix)
+	}
 	for _, p := range urlPath {
 		ps = append(ps, p)
 	}
@@ -589,13 +592,18 @@ func (cli *Client) UploadLink(link string) (*RespMediaUpload, error) {
 	if err != nil {
 		return nil, err
 	}
-	return cli.UploadToContentRepo(res.Body, res.Header.Get("Content-Type"), res.ContentLength)
+	return cli.UploadToContentRepo(res.Body, res.Header.Get("Content-Type"), res.ContentLength, "")
 }
 
 // UploadToContentRepo uploads the given bytes to the content repository and returns an MXC URI.
 // See http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-media-r0-upload
-func (cli *Client) UploadToContentRepo(content io.Reader, contentType string, contentLength int64) (*RespMediaUpload, error) {
-	req, err := http.NewRequest("POST", cli.BuildBaseURL("_matrix/media/r0/upload"), content)
+func (cli *Client) UploadToContentRepo(content io.Reader, contentType string, contentLength int64, contentFilename string) (*RespMediaUpload, error) {
+	query := map[string]string{}
+	if contentFilename != "" {
+		query["filename"] = contentFilename
+	}
+	url := cli.BuildURLWithQuery([]string{"_matrix", "media", "r0", "upload"}, query)
+	req, err := http.NewRequest("POST", url, content)
 	if err != nil {
 		return nil, err
 	}
