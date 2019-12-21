@@ -24,19 +24,20 @@ type RespVersions struct {
 
 // RespPublicRooms is the JSON response for http://matrix.org/speculator/spec/HEAD/client_server/unstable.html#get-matrix-client-unstable-publicrooms
 type RespPublicRooms struct {
-	TotalRoomCountEstimate int                `json:"total_room_count_estimate"`
-	PrevBatch              string             `json:"prev_batch"`
-	NextBatch              string             `json:"next_batch"`
-	Chunk                  []PublicRoomsChunk `json:"chunk"`
+	TotalRoomCountEstimate int          `json:"total_room_count_estimate"`
+	PrevBatch              string       `json:"prev_batch"`
+	NextBatch              string       `json:"next_batch"`
+	Chunk                  []PublicRoom `json:"chunk"`
 }
 
-type PublicRoomsChunk struct {
+// PublicRooms is a part of RespPublicRooms representing the disclosed information regarding a public room
+type PublicRoom struct {
 	CanonicalAlias   string   `json:"canonical_alias"`
 	Name             string   `json:"name"`
 	WorldReadable    bool     `json:"world_readable"`
 	Topic            string   `json:"topic"`
 	NumJoinedMembers int      `json:"num_joined_members"`
-	AvatarUrl        string   `json:"avatar_url"`
+	AvatarURL        string   `json:"avatar_url"`
 	RoomID           string   `json:"room_id"`
 	GuestCanJoin     bool     `json:"guest_can_join"`
 	Aliases          []string `json:"aliases"`
