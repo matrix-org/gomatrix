@@ -30,19 +30,6 @@ type RespPublicRooms struct {
 	Chunk                  []PublicRoom `json:"chunk"`
 }
 
-// PublicRooms is a part of RespPublicRooms representing the disclosed information regarding a public room
-type PublicRoom struct {
-	CanonicalAlias   string   `json:"canonical_alias"`
-	Name             string   `json:"name"`
-	WorldReadable    bool     `json:"world_readable"`
-	Topic            string   `json:"topic"`
-	NumJoinedMembers int      `json:"num_joined_members"`
-	AvatarURL        string   `json:"avatar_url"`
-	RoomID           string   `json:"room_id"`
-	GuestCanJoin     bool     `json:"guest_can_join"`
-	Aliases          []string `json:"aliases"`
-}
-
 // RespJoinRoom is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-join
 type RespJoinRoom struct {
 	RoomID string `json:"room_id"`
