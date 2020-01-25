@@ -372,7 +372,7 @@ func (cli *Client) Versions() (resp *RespVersions, err error) {
 	return
 }
 
-// PublicRooms returns the list of public rooms on target server. Does not require Auth. See http://matrix.org/speculator/spec/HEAD/client_server/unstable.html#get-matrix-client-unstable-publicrooms
+// PublicRooms returns the list of public rooms on target server. See https://matrix.org/docs/spec/client_server/r0.6.0#get-matrix-client-unstable-publicrooms
 func (cli *Client) PublicRooms(limit int, since string, server string) (resp *RespPublicRooms, err error) {
 	args := map[string]string{}
 
@@ -391,7 +391,8 @@ func (cli *Client) PublicRooms(limit int, since string, server string) (resp *Re
 	return
 }
 
-// PublicRoomsFiltered returns a subset of PublicRooms filtered server side. See http://matrix.org/speculator/spec/HEAD/client_server/unstable.html#post-matrix-client-unstable-publicrooms
+// PublicRoomsFiltered returns a subset of PublicRooms filtered server side.
+// See https://matrix.org/docs/spec/client_server/r0.6.0#post-matrix-client-unstable-publicrooms
 func (cli *Client) PublicRoomsFiltered(limit int, since string, server string, filter string) (resp *RespPublicRooms, err error) {
 	content := map[string]string{}
 
