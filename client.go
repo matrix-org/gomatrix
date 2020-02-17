@@ -357,10 +357,18 @@ func (cli *Client) Login(req *ReqLogin) (resp *RespLogin, err error) {
 	return
 }
 
-// Logout the current user. See http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-logout
+// Logout the current user. See http://matrix.org/docs/spec/client_server/r0.6.0.html#post-matrix-client-r0-logout
 // This does not clear the credentials from the client instance. See ClearCredentials() instead.
 func (cli *Client) Logout() (resp *RespLogout, err error) {
 	urlPath := cli.BuildURL("logout")
+	err = cli.MakeRequest("POST", urlPath, nil, &resp)
+	return
+}
+
+// LogoutAll logs the current user out on all devices. See https://matrix.org/docs/spec/client_server/r0.6.0#post-matrix-client-r0-logout-all
+// This does not clear the credentials from the client instance. See ClearCredentails() instead.
+func (cli *Client) LogoutAll() (resp *RespLogoutAll, err error) {
+	urlPath := cli.BuildURL("logout/all")
 	err = cli.MakeRequest("POST", urlPath, nil, &resp)
 	return
 }
