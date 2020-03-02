@@ -1,0 +1,16 @@
+---
+linters:
+  enable:
+    - gocyclo
+    - gofmt
+    - goimports
+    - golint
+    - govet
+    - ineffassign
+    - misspell
+
+linters-settings:
+  gocyclo:
+    min-complexity: 13
+  govet:
+    check-shadowing: true

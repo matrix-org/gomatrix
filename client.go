@@ -56,9 +56,7 @@ func (e HTTPError) Error() string {
 // BuildURL builds a URL with the Client's homserver/prefix/access_token set already.
 func (cli *Client) BuildURL(urlPath ...string) string {
 	ps := []string{cli.Prefix}
-	for _, p := range urlPath {
-		ps = append(ps, p)
-	}
+	ps = append(ps, urlPath...)
 	return cli.BuildBaseURL(ps...)
 }
 
@@ -195,7 +193,7 @@ func (cli *Client) MakeRequest(method string, httpURL string, reqBody interface{
 	var err error
 	if reqBody != nil {
 		buf := new(bytes.Buffer)
-		if err := json.NewEncoder(buf).Encode(reqBody); err != nil {
+		if err = json.NewEncoder(buf).Encode(reqBody); err != nil {
 			return err
 		}
 		req, err = http.NewRequest(method, httpURL, buf)
