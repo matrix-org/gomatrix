@@ -53,7 +53,7 @@ func (e HTTPError) Error() string {
 	return fmt.Sprintf("contents=%v msg=%s code=%d wrapped=%s", e.Contents, e.Message, e.Code, wrappedErrMsg)
 }
 
-// BuildURL builds a URL with the Client's homserver/prefix/access_token set already.
+// BuildURL builds a URL with the Client's homserver/prefix set already.
 func (cli *Client) BuildURL(urlPath ...string) string {
 	ps := []string{cli.Prefix}
 	for _, p := range urlPath {
@@ -62,7 +62,7 @@ func (cli *Client) BuildURL(urlPath ...string) string {
 	return cli.BuildBaseURL(ps...)
 }
 
-// BuildBaseURL builds a URL with the Client's homeserver/access_token set already. You must
+// BuildBaseURL builds a URL with the Client's homeserver set already. You must
 // supply the prefix in the path.
 func (cli *Client) BuildBaseURL(urlPath ...string) string {
 	// copy the URL. Purposefully ignore error as the input is from a valid URL already
@@ -75,9 +75,6 @@ func (cli *Client) BuildBaseURL(urlPath ...string) string {
 		hsURL.Path = hsURL.Path + "/"
 	}
 	query := hsURL.Query()
-	if cli.AccessToken != "" {
-		query.Set("access_token", cli.AccessToken)
-	}
 	if cli.AppServiceUserID != "" {
 		query.Set("user_id", cli.AppServiceUserID)
 	}
@@ -85,7 +82,7 @@ func (cli *Client) BuildBaseURL(urlPath ...string) string {
 	return hsURL.String()
 }
 
-// BuildURLWithQuery builds a URL with query parameters in addition to the Client's homeserver/prefix/access_token set already.
+// BuildURLWithQuery builds a URL with query parameters in addition to the Client's homeserver/prefix set already.
 func (cli *Client) BuildURLWithQuery(urlPath []string, urlQuery map[string]string) string {
 	u, _ := url.Parse(cli.BuildURL(urlPath...))
 	q := u.Query()
@@ -206,7 +203,13 @@ func (cli *Client) MakeRequest(method string, httpURL string, reqBody interface{
 	if err != nil {
 		return err
 	}
+
 	req.Header.Set("Content-Type", "application/json")
+
+	if cli.AccessToken != "" {
+		req.Header.Set("Authorization", "Bearer "+cli.AccessToken)
+	}
+
 	res, err := cli.Client.Do(req)
 	if res != nil {
 		defer res.Body.Close()
@@ -647,6 +650,7 @@ func (cli *Client) UploadToContentRepo(content io.Reader, contentType string, co
 		return nil, err
 	}
 	req.Header.Set("Content-Type", contentType)
+	req.Header.Set("Authorization", "Bearer "+cli.AccessToken)
 	req.ContentLength = contentLength
 	res, err := cli.Client.Do(req)
 	if res != nil {
