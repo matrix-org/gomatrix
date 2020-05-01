@@ -46,7 +46,7 @@ func Example_customInterfaces() {
 	cli.Client = http.DefaultClient
 
 	// Once you call a function, you can't safely change the interfaces.
-	cli.SendText("!foo:bar", "Down the rabbit hole")
+	_, _ = cli.SendText("!foo:bar", "Down the rabbit hole")
 }
 
 func ExampleClient_BuildURLWithQuery() {
