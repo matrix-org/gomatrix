@@ -113,6 +113,14 @@ type RespUserDisplayName struct {
 	DisplayName string `json:"displayname"`
 }
 
+// RespUserStatus is the JSON response for https://matrix.org/docs/spec/client_server/r0.6.0#get-matrix-client-r0-presence-userid-status
+type RespUserStatus struct {
+	Presence        string `json:"presence"`
+	StatusMsg       string `json:"status_msg"`
+	lastActiveAgo   int    `json:"last_active_ago"`
+	currentlyActive bool   `json:"currently_active"`
+}
+
 // RespRegister is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-register
 type RespRegister struct {
 	AccessToken  string `json:"access_token"`
