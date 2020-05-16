@@ -547,6 +547,12 @@ func (cli *Client) RedactEvent(roomID, eventID string, req *ReqRedact) (resp *Re
 	return
 }
 
+// MarkRead marks eventID in roomID as read, signifying the event, and all before it have been read. See https://matrix.org/docs/spec/client_server/r0.6.0#post-matrix-client-r0-rooms-roomid-receipt-receipttype-eventid
+func (cli *Client) MarkRead(roomID, eventID string) error {
+	urlPath := cli.BuildURL("rooms", roomID, "receipt", "m.read", eventID)
+	return cli.MakeRequest("POST", urlPath, nil, nil)
+}
+
 // CreateRoom creates a new Matrix room. See https://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-createroom
 //  resp, err := cli.CreateRoom(&gomatrix.ReqCreateRoom{
 //  	Preset: "public_chat",
