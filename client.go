@@ -538,7 +538,14 @@ func (cli *Client) SendStateEvent(roomID, eventType, stateKey string, contentJSO
 // See http://matrix.org/docs/spec/client_server/r0.2.0.html#m-text
 func (cli *Client) SendText(roomID, text string) (*RespSendEvent, error) {
 	return cli.SendMessageEvent(roomID, "m.room.message",
-		TextMessage{"m.text", text})
+		TextMessage{MsgType: "m.text", Body: text})
+}
+
+// SendFormattedText sends an m.room.message event into the given room with a msgtype of m.text, supports a subset of HTML for formatting.
+// See https://matrix.org/docs/spec/client_server/r0.6.0#m-text
+func (cli *Client) SendFormattedText(roomID, text, formattedText string) (*RespSendEvent, error) {
+	return cli.SendMessageEvent(roomID, "m.room.message",
+		TextMessage{MsgType: "m.text", Body: text, FormattedBody: formattedText, Format: "org.matrix.custom.html"})
 }
 
 // SendImage sends an m.room.message event into the given room with a msgtype of m.image
@@ -567,7 +574,7 @@ func (cli *Client) SendVideo(roomID, body, url string) (*RespSendEvent, error) {
 // See http://matrix.org/docs/spec/client_server/r0.2.0.html#m-notice
 func (cli *Client) SendNotice(roomID, text string) (*RespSendEvent, error) {
 	return cli.SendMessageEvent(roomID, "m.room.message",
-		TextMessage{"m.notice", text})
+		TextMessage{MsgType: "m.notice", Body: text})
 }
 
 // RedactEvent redacts the given event. See http://matrix.org/docs/spec/client_server/r0.2.0.html#put-matrix-client-r0-rooms-roomid-redact-eventid-txnid
