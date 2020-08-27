@@ -55,10 +55,7 @@ func (e HTTPError) Error() string {
 
 // BuildURL builds a URL with the Client's homserver/prefix/access_token set already.
 func (cli *Client) BuildURL(urlPath ...string) string {
-	ps := []string{cli.Prefix}
-	for _, p := range urlPath {
-		ps = append(ps, p)
-	}
+	ps := append([]string{cli.Prefix}, urlPath...)
 	return cli.BuildBaseURL(ps...)
 }
 
