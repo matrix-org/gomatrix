@@ -122,16 +122,30 @@ type RespRegister struct {
 	UserID       string `json:"user_id"`
 }
 
-// RespLogin is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-login
+// RespLogin is the JSON response for http://matrix.org/docs/spec/client_server/r0.6.0.html#post-matrix-client-r0-login
 type RespLogin struct {
-	AccessToken string `json:"access_token"`
-	DeviceID    string `json:"device_id"`
-	HomeServer  string `json:"home_server"`
-	UserID      string `json:"user_id"`
+	AccessToken string               `json:"access_token"`
+	DeviceID    string               `json:"device_id"`
+	HomeServer  string               `json:"home_server"`
+	UserID      string               `json:"user_id"`
+	WellKnown   DiscoveryInformation `json:"well_known"`
 }
 
-// RespLogout is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-logout
+// DiscoveryInformation is the JSON Response for https://matrix.org/docs/spec/client_server/r0.6.0#get-well-known-matrix-client and a part of the JSON Response for https://matrix.org/docs/spec/client_server/r0.6.0#post-matrix-client-r0-login
+type DiscoveryInformation struct {
+	Homeserver struct {
+		BaseURL string `json:"base_url"`
+	} `json:"m.homeserver"`
+	IdentityServer struct {
+		BaseURL string `json:"base_url"`
+	} `json:"m.identitiy_server"`
+}
+
+// RespLogout is the JSON response for http://matrix.org/docs/spec/client_server/r0.6.0.html#post-matrix-client-r0-logout
 type RespLogout struct{}
+
+// RespLogoutAll is the JSON response for https://matrix.org/docs/spec/client_server/r0.6.0#post-matrix-client-r0-logout-all
+type RespLogoutAll struct{}
 
 // RespCreateRoom is the JSON response for https://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-createroom
 type RespCreateRoom struct {
