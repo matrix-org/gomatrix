@@ -494,6 +494,29 @@ func (cli *Client) SetAvatarURL(url string) error {
 	return nil
 }
 
+// GetStatus returns the status of the user from the specified MXID. See https://matrix.org/docs/spec/client_server/r0.6.0#get-matrix-client-r0-presence-userid-status
+func (cli *Client) GetStatus(mxid string) (resp *RespUserStatus, err error) {
+	urlPath := cli.BuildURL("presence", mxid, "status")
+	err = cli.MakeRequest("GET", urlPath, nil, &resp)
+	return
+}
+
+// GetOwnStatus returns the user's status. See https://matrix.org/docs/spec/client_server/r0.6.0#get-matrix-client-r0-presence-userid-status
+func (cli *Client) GetOwnStatus() (resp *RespUserStatus, err error) {
+	return cli.GetStatus(cli.UserID)
+}
+
+// SetStatus sets the user's status. See https://matrix.org/docs/spec/client_server/r0.6.0#put-matrix-client-r0-presence-userid-status
+func (cli *Client) SetStatus(presence, status string) (err error) {
+	urlPath := cli.BuildURL("presence", cli.UserID, "status")
+	s := struct {
+		Presence  string `json:"presence"`
+		StatusMsg string `json:"status_msg"`
+	}{presence, status}
+	err = cli.MakeRequest("PUT", urlPath, &s, nil)
+	return
+}
+
 // SendMessageEvent sends a message event into a room. See http://matrix.org/docs/spec/client_server/r0.2.0.html#put-matrix-client-r0-rooms-roomid-send-eventtype-txnid
 // contentJSON should be a pointer to something that can be encoded as JSON using json.Marshal.
 func (cli *Client) SendMessageEvent(roomID string, eventType string, contentJSON interface{}) (resp *RespSendEvent, err error) {
