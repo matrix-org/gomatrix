@@ -28,48 +28,45 @@ If you intend to contribute to gomatrix you'll first need Go installed on your m
 -   Fork gomatrix to your GitHub account by clicking the [Fork](https://github.com/matrix-org/gomatrix/fork) button.
 -   [Clone](https://help.github.com/en/articles/fork-a-repo#step-2-create-a-local-clone-of-your-fork) the main repository (not your fork) to your local machine.
 
-        ```
+        
         $ git clone https://github.com/matrix-org/gomatrix
         $ cd gomatrix
-        ```
+        
 
 -   Add your fork as a remote to push your contributions.Replace
     ``{username}`` with your username.
 
-        `git remote add fork https://github.com/{username}/gomatrix`
+        git remote add fork https://github.com/{username}/gomatrix
 
 -   Create a new branch to identify what feature you are working on.
 
-        ```
         $ git fetch origin
         $ git checkout -b your-branch-name origin/master
-        ```
+        
 
 -   Make your changes, including tests that cover any code changes you make, and run them as described below.
 
 -   Execute pre-commit hooks by running 
 
-        `<gomatrix dir>/hooks/pre-commit`
+        <gomatrix dir>/hooks/pre-commit
 
 -   Push your changes to your fork and [create a pull request](https://help.github.com/en/articles/creating-a-pull-request) describing your changes.
 
-        `$ git push --set-upstream fork your-branch-name`
+        $ git push --set-upstream fork your-branch-name
 
 -   Finally, create a [pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
 
 ## How to run tests
 
-You can run the test suite and example code with
-
-        `$ go test -v`
+You can run the test suite and example code with `$ go test -v`
 
 # Running Coverage
 
 To run coverage, first generate the coverage report using `go test`
 
-    `go test -v -cover -coverprofile=coverage.out`
+    go test -v -cover -coverprofile=coverage.out
 
 You can now show the generated report as a html page with `go tool`
 
-    `go tool cover -html=coverage.out`
+    go tool cover -html=coverage.out
 
