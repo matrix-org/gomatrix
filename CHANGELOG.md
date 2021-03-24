@@ -1,1 +1,1 @@
-## Release 0.1.0 (UNRELEADED)
+## Release 0.1.0 (UNRELEASED)
