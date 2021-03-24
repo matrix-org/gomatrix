@@ -84,6 +84,55 @@ func TestClient_StateEvent(t *testing.T) {
 	}
 }
 
+func TestClient_PublicRooms(t *testing.T) {
+	cli := mockClient(func(req *http.Request) (*http.Response, error) {
+		if req.Method == "GET" && req.URL.Path == "/_matrix/client/r0/publicRooms" {
+			return &http.Response{
+				StatusCode: 200,
+				Body: ioutil.NopCloser(bytes.NewBufferString(`{
+  "chunk": [
+    {
+      "aliases": [
+        "#murrays:cheese.bar"
+      ],
+      "avatar_url": "mxc://bleeker.street/CHEDDARandBRIE",
+      "guest_can_join": false,
+      "name": "CHEESE",
+      "num_joined_members": 37,
+      "room_id": "!ol19s:bleecker.street",
+      "topic": "Tasty tasty cheese",
+      "world_readable": true
+    }
+  ],
+  "next_batch": "p190q",
+  "prev_batch": "p1902",
+  "total_room_count_estimate": 115
+}`)),
+			}, nil
+		}
+
+		return nil, fmt.Errorf("unhandled URL: %s", req.URL.Path)
+	})
+
+	publicRooms, err := cli.PublicRooms(0, "", "")
+
+	if err != nil {
+		t.Fatalf("PublicRooms: error, got %s", err.Error())
+	}
+	if publicRooms.TotalRoomCountEstimate != 115 {
+		t.Fatalf("PublicRooms: got %d, want %d", publicRooms.TotalRoomCountEstimate, 115)
+	}
+	if len(publicRooms.Chunk) != 1 {
+		t.Fatalf("PublicRooms: got %d, want %d", len(publicRooms.Chunk), 1)
+	}
+	if publicRooms.Chunk[0].Name != "CHEESE" {
+		t.Fatalf("PublicRooms: got %s, want %s", publicRooms.Chunk[0].Name, "CHEESE")
+	}
+	if publicRooms.Chunk[0].NumJoinedMembers != 37 {
+		t.Fatalf("PublicRooms: got %d, want %d", publicRooms.Chunk[0].NumJoinedMembers, 37)
+	}
+}
+
 func mockClient(fn func(*http.Request) (*http.Response, error)) *Client {
 	mrt := MockRoundTripper{
 		RT: fn,
@@ -101,5 +150,8 @@ type MockRoundTripper struct {
 }
 
 func (t MockRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.Header.Get("Authorization") == "" {
+		panic("no auth")
+	}
 	return t.RT(req)
 }

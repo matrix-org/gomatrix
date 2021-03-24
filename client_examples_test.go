@@ -46,7 +46,7 @@ func Example_customInterfaces() {
 	cli.Client = http.DefaultClient
 
 	// Once you call a function, you can't safely change the interfaces.
-	cli.SendText("!foo:bar", "Down the rabbit hole")
+	_, _ = cli.SendText("!foo:bar", "Down the rabbit hole")
 }
 
 func ExampleClient_BuildURLWithQuery() {
@@ -55,7 +55,7 @@ func ExampleClient_BuildURLWithQuery() {
 		"filter_id": "5",
 	})
 	fmt.Println(out)
-	// Output: https://matrix.org/_matrix/client/r0/sync?access_token=abcdef123456&filter_id=5
+	// Output: https://matrix.org/_matrix/client/r0/sync?filter_id=5
 }
 
 func ExampleClient_BuildURL() {
@@ -63,7 +63,7 @@ func ExampleClient_BuildURL() {
 	cli, _ := NewClient("https://matrix.org", userID, "abcdef123456")
 	out := cli.BuildURL("user", userID, "filter")
 	fmt.Println(out)
-	// Output: https://matrix.org/_matrix/client/r0/user/@example:matrix.org/filter?access_token=abcdef123456
+	// Output: https://matrix.org/_matrix/client/r0/user/@example:matrix.org/filter
 }
 
 func ExampleClient_BuildBaseURL() {
@@ -71,7 +71,7 @@ func ExampleClient_BuildBaseURL() {
 	cli, _ := NewClient("https://matrix.org", userID, "abcdef123456")
 	out := cli.BuildBaseURL("_matrix", "client", "r0", "directory", "room", "#matrix:matrix.org")
 	fmt.Println(out)
-	// Output: https://matrix.org/_matrix/client/r0/directory/room/%23matrix:matrix.org?access_token=abcdef123456
+	// Output: https://matrix.org/_matrix/client/r0/directory/room/%23matrix:matrix.org
 }
 
 // Retrieve the content of a m.room.name state event.
