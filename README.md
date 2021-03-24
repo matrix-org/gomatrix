@@ -11,7 +11,7 @@ All contributions are greatly appreciated!
 
 ## How to report issues
 
-Obs. it's important to check the current open issues for similar reports
+Please check the current open issues for similar reports
 in order to avoid duplicates.
 
 Some general guidelines:
@@ -69,4 +69,3 @@ To run coverage, first generate the coverage report using `go test`
 You can now show the generated report as a html page with `go tool`
 
     go tool cover -html=coverage.out
-
