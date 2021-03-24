@@ -73,7 +73,7 @@ func TestFilterValidate(t *testing.T) {
 	// test validation fail
 	f.EventFormat = "unkown"
 	err = f.Validate()
-	if err == nil || err.Error() != "Bad event_format value. Must be one of [\"client\", \"federation\"]" {
+	if err == nil {
 		t.Fatalf("TestFilterValidate: Filter validation false positive, event_format: '%s'", f.EventFormat)
 	}
 }
