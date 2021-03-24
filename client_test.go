@@ -150,5 +150,8 @@ type MockRoundTripper struct {
 }
 
 func (t MockRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.Header.Get("Authorization") == "" {
+		panic("no auth")
+	}
 	return t.RT(req)
 }
