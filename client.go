@@ -768,6 +768,40 @@ func (cli *Client) Messages(roomID, from, to string, dir rune, limit int) (resp 
 	return
 }
 
+// CreateRoomAlias create a new mapping from room alias to room ID.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#put-matrix-client-r0-directory-room-roomalias
+func (cli *Client) CreateRoomAlias(alias string, req *ReqCreateRoomAlias) error {
+	urlPath := cli.BuildURL("directory", "room", alias)
+	return cli.MakeRequest(http.MethodPut, urlPath, req, nil)
+}
+
+// ResolveRoomsIDs requests that the server resolve a room alias to a room ID.
+// The server will use the federation API to resolve the alias if the domain part of the alias does not correspond to the server's own domain.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-directory-room-roomalias
+func (cli *Client) ResolveRoomsIDs(alias string) (resp *RespResolveRoomsIDs, err error) {
+	urlPath := cli.BuildURL("directory", "room", alias)
+	err = cli.MakeRequest(http.MethodGet, urlPath, nil, resp)
+	return
+}
+
+// DeleteRoomAlias remove a mapping of room alias to room ID.
+// Servers may choose to implement additional access control checks here, for instance that room aliases can only be deleted by their creator or a server administrator.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#delete-matrix-client-r0-directory-room-roomalias
+func (cli *Client) DeleteRoomAlias(alias string) error {
+	urlPath := cli.BuildURL("directory", "room", alias)
+	return cli.MakeRequest(http.MethodDelete, urlPath, nil, nil)
+}
+
+// RoomAliases get a list of aliases maintained by the local server for the given room.
+// This endpoint can be called by users who are in the room (external users receive an M_FORBIDDEN error response). If the room's m.room.history_visibility maps to world_readable, any user can call this endpoint.
+// Servers may choose to implement additional access control checks here, such as allowing server administrators to view aliases regardless of membership.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-rooms-roomid-aliases
+func (cli *Client) RoomAliases(roomID string) (resp *RespRoomAliases, err error) {
+	urlPath := cli.BuildURL("directory", roomID, "aliases")
+	err = cli.MakeRequest(http.MethodGet, urlPath, nil, resp)
+	return
+}
+
 // TurnServer returns turn server details and credentials for the client to use when initiating calls.
 // See http://matrix.org/docs/spec/client_server/r0.2.0.html#get-matrix-client-r0-voip-turnserver
 func (cli *Client) TurnServer() (resp *RespTurnServer, err error) {

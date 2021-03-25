@@ -208,3 +208,14 @@ type RespTurnServer struct {
 	TTL      int      `json:"ttl"`
 	URIs     []string `json:"uris"`
 }
+
+// RespResolveRoomsIDs is the JSON response for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-directory-room-roomalias
+type RespResolveRoomsIDs struct {
+	RoomID  string   `json:"room_id"`
+	Servers []string `json:"servers"`
+}
+
+// RespRoomAliases is the JSON response for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-rooms-roomid-aliases
+type RespRoomAliases struct {
+	Aliases []string `json:"aliases"`
+}
