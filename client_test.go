@@ -10,7 +10,7 @@ import (
 
 func TestClient_LeaveRoom(t *testing.T) {
 	cli := mockClient(func(req *http.Request) (*http.Response, error) {
-		if req.Method == "POST" && req.URL.Path == "/_matrix/client/r0/rooms/!foo:bar/leave" {
+		if req.Method == http.MethodPost && req.URL.Path == "/_matrix/client/r0/rooms/!foo:bar/leave" {
 			return &http.Response{
 				StatusCode: 200,
 				Body:       ioutil.NopCloser(bytes.NewBufferString(`{}`)),
@@ -26,7 +26,7 @@ func TestClient_LeaveRoom(t *testing.T) {
 
 func TestClient_GetAvatarUrl(t *testing.T) {
 	cli := mockClient(func(req *http.Request) (*http.Response, error) {
-		if req.Method == "GET" && req.URL.Path == "/_matrix/client/r0/profile/@user:test.gomatrix.org/avatar_url" {
+		if req.Method == http.MethodGet && req.URL.Path == "/_matrix/client/r0/profile/@user:test.gomatrix.org/avatar_url" {
 			return &http.Response{
 				StatusCode: 200,
 				Body:       ioutil.NopCloser(bytes.NewBufferString(`{"avatar_url":"mxc://matrix.org/iJaUjkshgdfsdkjfn"}`)),
@@ -47,7 +47,7 @@ func TestClient_GetAvatarUrl(t *testing.T) {
 
 func TestClient_SetAvatarUrl(t *testing.T) {
 	cli := mockClient(func(req *http.Request) (*http.Response, error) {
-		if req.Method == "PUT" && req.URL.Path == "/_matrix/client/r0/profile/@user:test.gomatrix.org/avatar_url" {
+		if req.Method == http.MethodPut && req.URL.Path == "/_matrix/client/r0/profile/@user:test.gomatrix.org/avatar_url" {
 			return &http.Response{
 				StatusCode: 200,
 				Body:       ioutil.NopCloser(bytes.NewBufferString(`{}`)),
@@ -63,7 +63,7 @@ func TestClient_SetAvatarUrl(t *testing.T) {
 
 func TestClient_StateEvent(t *testing.T) {
 	cli := mockClient(func(req *http.Request) (*http.Response, error) {
-		if req.Method == "GET" && req.URL.Path == "/_matrix/client/r0/rooms/!foo:bar/state/m.room.name" {
+		if req.Method == http.MethodGet && req.URL.Path == "/_matrix/client/r0/rooms/!foo:bar/state/m.room.name" {
 			return &http.Response{
 				StatusCode: 200,
 				Body:       ioutil.NopCloser(bytes.NewBufferString(`{"name":"Room Name Goes Here"}`)),
@@ -86,7 +86,7 @@ func TestClient_StateEvent(t *testing.T) {
 
 func TestClient_PublicRooms(t *testing.T) {
 	cli := mockClient(func(req *http.Request) (*http.Response, error) {
-		if req.Method == "GET" && req.URL.Path == "/_matrix/client/r0/publicRooms" {
+		if req.Method == http.MethodGet && req.URL.Path == "/_matrix/client/r0/publicRooms" {
 			return &http.Response{
 				StatusCode: 200,
 				Body: ioutil.NopCloser(bytes.NewBufferString(`{
