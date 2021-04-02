@@ -25,7 +25,7 @@ type Syncer interface {
 type DefaultSyncer struct {
 	UserID    string
 	Store     Storer
-	listeners map[string][]OnEventListener // event type to listeners array
+	listeners map[EventType][]OnEventListener // event type to listeners array
 }
 
 // OnEventListener can be used with DefaultSyncer.OnEventType to be informed of incoming events.
@@ -36,7 +36,7 @@ func NewDefaultSyncer(userID string, store Storer) *DefaultSyncer {
 	return &DefaultSyncer{
 		UserID:    userID,
 		Store:     store,
-		listeners: make(map[string][]OnEventListener),
+		listeners: make(map[EventType][]OnEventListener),
 	}
 }
 
@@ -92,7 +92,7 @@ func (s *DefaultSyncer) ProcessResponse(res *RespSync, since string) (err error)
 
 // OnEventType allows callers to be notified when there are new events for the given event type.
 // There are no duplicate checks.
-func (s *DefaultSyncer) OnEventType(eventType string, callback OnEventListener) {
+func (s *DefaultSyncer) OnEventType(eventType EventType, callback OnEventListener) {
 	_, exists := s.listeners[eventType]
 	if !exists {
 		s.listeners[eventType] = []OnEventListener{}
@@ -116,7 +116,7 @@ func (s *DefaultSyncer) shouldProcessResponse(resp *RespSync, since string) bool
 	for roomID, roomData := range resp.Rooms.Join {
 		for i := len(roomData.Timeline.Events) - 1; i >= 0; i-- {
 			e := roomData.Timeline.Events[i]
-			if e.Type == "m.room.member" && e.StateKey != nil && *e.StateKey == s.UserID {
+			if e.Type == MemberEventType && e.StateKey != nil && *e.StateKey == s.UserID {
 				m := e.Content["membership"]
 				mship, ok := m.(string)
 				if !ok {

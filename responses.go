@@ -1,28 +1,19 @@
 package gomatrix
 
-// RespError is the standard JSON error response from Homeservers. It also implements the Golang "error" interface.
-// See http://matrix.org/docs/spec/client_server/r0.2.0.html#api-standards
-type RespError struct {
-	ErrCode string `json:"errcode"`
-	Err     string `json:"error"`
-}
-
-// Error returns the errcode and error message.
-func (e RespError) Error() string {
-	return e.ErrCode + ": " + e.Err
-}
-
 // RespCreateFilter is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-user-userid-filter
+//easyjson:json
 type RespCreateFilter struct {
 	FilterID string `json:"filter_id"`
 }
 
 // RespVersions is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#get-matrix-client-versions
+//easyjson:json
 type RespVersions struct {
 	Versions []string `json:"versions"`
 }
 
 // RespPublicRooms is the JSON response for http://matrix.org/speculator/spec/HEAD/client_server/unstable.html#get-matrix-client-unstable-publicrooms
+//easyjson:json
 type RespPublicRooms struct {
 	TotalRoomCountEstimate int          `json:"total_room_count_estimate"`
 	PrevBatch              string       `json:"prev_batch"`
@@ -31,37 +22,47 @@ type RespPublicRooms struct {
 }
 
 // RespJoinRoom is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-join
+//easyjson:json
 type RespJoinRoom struct {
 	RoomID string `json:"room_id"`
 }
 
 // RespLeaveRoom is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-leave
+//easyjson:json
 type RespLeaveRoom struct{}
 
 // RespForgetRoom is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-forget
+//easyjson:json
 type RespForgetRoom struct{}
 
 // RespInviteUser is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-invite
+//easyjson:json
 type RespInviteUser struct{}
 
 // RespKickUser is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-kick
+//easyjson:json
 type RespKickUser struct{}
 
 // RespBanUser is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-ban
+//easyjson:json
 type RespBanUser struct{}
 
 // RespUnbanUser is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-unban
+//easyjson:json
 type RespUnbanUser struct{}
 
 // RespTyping is the JSON response for https://matrix.org/docs/spec/client_server/r0.2.0.html#put-matrix-client-r0-rooms-roomid-typing-userid
+//easyjson:json
 type RespTyping struct{}
 
 // RespJoinedRooms is the JSON response for TODO-SPEC https://github.com/matrix-org/synapse/pull/1680
+//easyjson:json
 type RespJoinedRooms struct {
 	JoinedRooms []string `json:"joined_rooms"`
 }
 
 // RespJoinedMembers is the JSON response for TODO-SPEC https://github.com/matrix-org/synapse/pull/1680
+//easyjson:json
 type RespJoinedMembers struct {
 	Joined map[string]struct {
 		DisplayName *string `json:"display_name"`
@@ -70,6 +71,7 @@ type RespJoinedMembers struct {
 }
 
 // RespMessages is the JSON response for https://matrix.org/docs/spec/client_server/r0.2.0.html#get-matrix-client-r0-rooms-roomid-messages
+//easyjson:json
 type RespMessages struct {
 	Start string  `json:"start"`
 	Chunk []Event `json:"chunk"`
@@ -77,16 +79,19 @@ type RespMessages struct {
 }
 
 // RespSendEvent is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#put-matrix-client-r0-rooms-roomid-send-eventtype-txnid
+//easyjson:json
 type RespSendEvent struct {
 	EventID string `json:"event_id"`
 }
 
 // RespMediaUpload is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-media-r0-upload
+//easyjson:json
 type RespMediaUpload struct {
 	ContentURI string `json:"content_uri"`
 }
 
 // RespUserInteractive is the JSON response for https://matrix.org/docs/spec/client_server/r0.2.0.html#user-interactive-authentication-api
+//easyjson:json
 type RespUserInteractive struct {
 	Flows []struct {
 		Stages []string `json:"stages"`
@@ -109,11 +114,13 @@ func (r RespUserInteractive) HasSingleStageFlow(stageName string) bool {
 }
 
 // RespUserDisplayName is the JSON response for https://matrix.org/docs/spec/client_server/r0.2.0.html#get-matrix-client-r0-profile-userid-displayname
+//easyjson:json
 type RespUserDisplayName struct {
 	DisplayName string `json:"displayname"`
 }
 
 // RespUserStatus is the JSON response for https://matrix.org/docs/spec/client_server/r0.6.0#get-matrix-client-r0-presence-userid-status
+//easyjson:json
 type RespUserStatus struct {
 	Presence        string `json:"presence"`
 	StatusMsg       string `json:"status_msg"`
@@ -122,6 +129,7 @@ type RespUserStatus struct {
 }
 
 // RespRegister is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-register
+//easyjson:json
 type RespRegister struct {
 	AccessToken  string `json:"access_token"`
 	DeviceID     string `json:"device_id"`
@@ -131,6 +139,7 @@ type RespRegister struct {
 }
 
 // RespLogin is the JSON response for http://matrix.org/docs/spec/client_server/r0.6.0.html#post-matrix-client-r0-login
+//easyjson:json
 type RespLogin struct {
 	AccessToken string               `json:"access_token"`
 	DeviceID    string               `json:"device_id"`
@@ -150,17 +159,21 @@ type DiscoveryInformation struct {
 }
 
 // RespLogout is the JSON response for http://matrix.org/docs/spec/client_server/r0.6.0.html#post-matrix-client-r0-logout
+//easyjson:json
 type RespLogout struct{}
 
 // RespLogoutAll is the JSON response for https://matrix.org/docs/spec/client_server/r0.6.0#post-matrix-client-r0-logout-all
+//easyjson:json
 type RespLogoutAll struct{}
 
 // RespCreateRoom is the JSON response for https://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-createroom
+//easyjson:json
 type RespCreateRoom struct {
 	RoomID string `json:"room_id"`
 }
 
 // RespSync is the JSON response for http://matrix.org/docs/spec/client_server/r0.2.0.html#get-matrix-client-r0-sync
+//easyjson:json
 type RespSync struct {
 	NextBatch   string `json:"next_batch"`
 	AccountData struct {
@@ -202,6 +215,7 @@ type RespSync struct {
 }
 
 // RespTurnServer is the JSON response from a Turn Server
+//easyjson:json
 type RespTurnServer struct {
 	Username string   `json:"username"`
 	Password string   `json:"password"`
