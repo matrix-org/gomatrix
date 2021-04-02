@@ -94,14 +94,14 @@ func TestEventWithoutMessageType(t *testing.T) {
 var testHTML = `<div>a<h1>bc</h1>d<p>e<i>fg</i>hi</p>j<p>k<br/>l<b>m</b>no</p>p<small>q</small>rs</div>`
 
 func TestGetHTMLMessage(t *testing.T) {
-	msg := GetHTMLMessage("m.text", testHTML)
+	msg := GetHTMLMessage(TextMessageType, testHTML)
 	if expected := "abcdefghijklmnopqrs"; msg.Body != expected {
 		t.Fatalf("TestGetHTMLMessage: got '%s', expected '%s'", msg.Body, expected)
 	}
 	if msg.FormattedBody != testHTML {
 		t.Fatalf("TestGetHTMLMessage: got '%s', expected '%s'", msg.FormattedBody, testHTML)
 	}
-	if msg.MsgType != "m.text" {
+	if msg.MsgType != TextMessageType {
 		t.Fatalf("TestGetHTMLMessage: got '%s', expected 'm.text'", msg.FormattedBody)
 	}
 	if expected := "org.matrix.custom.html"; msg.Format != expected {
