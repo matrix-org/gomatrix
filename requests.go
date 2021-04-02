@@ -89,6 +89,7 @@ type ReqTyping struct {
 }
 
 // ReqCreateRoomAlias is the JSON request for https://matrix.org/docs/spec/client_server/r0.6.1#put-matrix-client-r0-directory-room-roomalias
+//easyjson:json
 type ReqCreateRoomAlias struct {
 	RoomID string `json:"room_id"`
 }

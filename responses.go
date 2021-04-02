@@ -224,12 +224,14 @@ type RespTurnServer struct {
 }
 
 // RespResolveRoomsIDs is the JSON response for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-directory-room-roomalias
+//easyjson:json
 type RespResolveRoomsIDs struct {
 	RoomID  string   `json:"room_id"`
 	Servers []string `json:"servers"`
 }
 
 // RespRoomAliases is the JSON response for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-rooms-roomid-aliases
+//easyjson:json
 type RespRoomAliases struct {
 	Aliases []string `json:"aliases"`
 }
