@@ -1045,7 +1045,7 @@ func easyjson11d1a9baDecodeGithubComMatrixOrgGomatrix9(in *jlexer.Lexer, out *Ev
 		case "sender":
 			out.Sender = string(in.String())
 		case "type":
-			out.Type = string(in.String())
+			out.Type = EventType(in.String())
 		case "origin_server_ts":
 			out.Timestamp = int64(in.Int64())
 		case "event_id":
