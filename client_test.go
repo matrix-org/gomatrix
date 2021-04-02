@@ -76,7 +76,7 @@ func TestClient_StateEvent(t *testing.T) {
 		Name string `json:"name"`
 	}{}
 
-	if err := cli.StateEvent("!foo:bar", "m.room.name", "", &content); err != nil {
+	if err := cli.StateEvent("!foo:bar", NameEventType, "", &content); err != nil {
 		t.Fatalf("StateEvent: error, got %s", err.Error())
 	}
 	if content.Name != "Room Name Goes Here" {
