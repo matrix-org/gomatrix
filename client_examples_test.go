@@ -10,7 +10,7 @@ func Example_sync() {
 	cli.Store.SaveFilterID("@example:matrix.org", "2")                // Optional: if you know it already
 	cli.Store.SaveNextBatch("@example:matrix.org", "111_222_333_444") // Optional: if you know it already
 	syncer := cli.Syncer.(*DefaultSyncer)
-	syncer.OnEventType("m.room.message", func(ev *Event) {
+	syncer.OnEventType(MessageEventType, func(ev *Event) {
 		fmt.Println("Message: ", ev)
 	})
 
@@ -80,7 +80,7 @@ func ExampleClient_StateEvent() {
 		Name string `json:"name"`
 	}{}
 	cli, _ := NewClient("https://matrix.org", "@example:matrix.org", "abcdef123456")
-	if err := cli.StateEvent("!foo:bar", "m.room.name", "", &content); err != nil {
+	if err := cli.StateEvent("!foo:bar", NameEventType, "", &content); err != nil {
 		panic(err)
 	}
 }

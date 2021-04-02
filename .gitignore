@@ -26,3 +26,9 @@ _testmain.go
 
 # test editor files
 *.swp
+
+# Jetbrains ide files
+.idea
+
+# VsCode files
+.vscode

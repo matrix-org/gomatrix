@@ -3,7 +3,7 @@ package gomatrix
 // Room represents a single Matrix room.
 type Room struct {
 	ID    string
-	State map[string]map[string]*Event
+	State map[EventType]map[string]*Event
 }
 
 // PublicRoom represents the information about a public room obtainable from the room directory
@@ -30,7 +30,7 @@ func (room Room) UpdateState(event *Event) {
 }
 
 // GetStateEvent returns the state event for the given type/state_key combo, or nil.
-func (room Room) GetStateEvent(eventType string, stateKey string) *Event {
+func (room Room) GetStateEvent(eventType EventType, stateKey string) *Event {
 	stateEventMap := room.State[eventType]
 	event := stateEventMap[stateKey]
 	return event
@@ -58,6 +58,6 @@ func NewRoom(roomID string) *Room {
 	// Init the State map and return a pointer to the Room
 	return &Room{
 		ID:    roomID,
-		State: make(map[string]map[string]*Event),
+		State: make(map[EventType]map[string]*Event),
 	}
 }
