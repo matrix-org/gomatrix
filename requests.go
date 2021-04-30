@@ -10,6 +10,12 @@ type ReqRegister struct {
 	Auth                     interface{} `json:"auth,omitempty"`
 }
 
+// ReqRegisterAppservice is the JSON request for https://matrix.org/docs/spec/application_service/r0.1.2#server-admin-style-permissions
+type ReqRegisterAppservice struct {
+	Username string `json:"username"`
+	Type     string `json:"type"`
+}
+
 // ReqLogin is the JSON request for http://matrix.org/docs/spec/client_server/r0.6.0.html#post-matrix-client-r0-login
 type ReqLogin struct {
 	Type                     string     `json:"type"`
