@@ -208,3 +208,49 @@ type RespTurnServer struct {
 	TTL      int      `json:"ttl"`
 	URIs     []string `json:"uris"`
 }
+
+// RespWhoAmI is JSON response for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-account-whoami
+type RespWhoAmI struct {
+	UserId string `json:"user_id"`
+}
+
+// RespRoomAlias is JSON response for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-directory-room-roomalias
+type RespRoomAlias struct {
+	RoomID  string   `json:"room_id"`
+	Servers []string `json:"servers"`
+}
+
+// RespGetDevices is JSON response for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-devices
+type RespGetDevices struct {
+	Devices []Device `json:"devices"`
+}
+
+type Device struct {
+	DeviceId    string `json:"device_id" example:"l4kRnv3u"`
+	DisplayName string `json:"display_name" example:"web"`
+	LastSeenTs  int    `json:"last_seen_ts" example:"1620644706232"`
+}
+
+// RespGetThreePID is JSON response for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-account-3pid
+type RespGetThreePID struct {
+	ThreePIDs []ThreePID `json:"threepids"`
+}
+
+type ThreePID struct {
+	AddedAt     int    `json:"added_at"`
+	Address     string `json:"address"`
+	Medium      string `json:"medium"`
+	ValidatedAt int    `json:"validated_at"`
+}
+
+// RespAccountData is JSON response for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-user-userid-account-data-type
+type RespAccountData map[string]interface{}
+
+// RespEmailRequestToken is JSON response for
+//		https://matrix.org/docs/spec/client_server/r0.6.1#post-matrix-client-r0-register-email-requesttoken
+//		https://matrix.org/docs/spec/client_server/r0.6.1#post-matrix-client-r0-account-password-email-requesttoken
+//		https://matrix.org/docs/spec/client_server/r0.6.1#post-matrix-client-r0-account-3pid-email-requesttoken
+type RespEmailRequestToken struct {
+	Sid       string `json:"sid"`
+	SumbitURL string `json:"submit_url"`
+}

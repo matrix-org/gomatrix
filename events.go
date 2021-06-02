@@ -143,6 +143,24 @@ type AudioMessage struct {
 	Info    AudioInfo `json:"info,omitempty"`
 }
 
+// PowerLevels is and m.room.power_levels event - https://matrix.org/docs/spec/client_server/r0.6.1#m-room-power-levels
+type PowerLevels struct {
+	Ban           int                    `json:"ban"`
+	Invite        int                    `json:"invite"`
+	Kick          int                    `json:"kick"`
+	Redact        int                    `json:"redact"`
+	Events        map[string]int         `json:"events"`
+	Users         map[string]int         `json:"users"`
+	Notifications NotificationPowerLevel `json:"notifications"`
+	EventsDefault int                    `json:"events_default"`
+	StateDefault  int                    `json:"state_default"`
+	UsersDefault  int                    `json:"users_default"`
+}
+
+type NotificationPowerLevel struct {
+	Room int `json:"room"`
+}
+
 var htmlRegex = regexp.MustCompile("<[^<]+?>")
 
 // GetHTMLMessage returns an HTMLMessage with the body set to a stripped version of the provided HTML, in addition

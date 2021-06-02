@@ -77,3 +77,27 @@ type ReqTyping struct {
 	Typing  bool  `json:"typing"`
 	Timeout int64 `json:"timeout"`
 }
+
+// ReqGetAccountData is the JSON request for https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-user-userid-account-data-type
+type ReqGetAccountData struct {
+	Type string
+}
+
+// ReqPutAccountData is the JSON request for https://matrix.org/docs/spec/client_server/r0.6.1#put-matrix-client-r0-user-userid-account-data-type
+type ReqPutAccountData struct {
+	ReqGetAccountData
+	Data map[string]interface{}
+}
+
+// ReqEmailRequestToken is the JSON request for
+// 		https://matrix.org/docs/spec/client_server/r0.6.1#post-matrix-client-r0-register-email-requesttoken
+//		https://matrix.org/docs/spec/client_server/r0.6.1#post-matrix-client-r0-account-password-email-requesttoken
+//		https://matrix.org/docs/spec/client_server/r0.6.1#post-matrix-client-r0-account-3pid-email-requesttoken
+type ReqEmailRequestToken struct {
+	IdServer      string `json:"id_server,omitempty"`
+	IdAccessToken string `json:"id_access_token,omitempty"`
+	Secret        string `json:"client_secret"`
+	Email         string `json:"email"`
+	SendAttempt   int    `json:"send_attempt"`
+	NextLink      string `json:"next_link,omitempty"`
+}
