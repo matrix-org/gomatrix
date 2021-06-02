@@ -776,6 +776,89 @@ func (cli *Client) TurnServer() (resp *RespTurnServer, err error) {
 	return
 }
 
+// WhoAmI Gets information about the owner of a given access token.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-account-whoami
+func (cli *Client) WhoAmI() (resp *RespWhoAmI, err error) {
+	u := cli.BuildURL("account", "whoami")
+	err = cli.MakeRequest("GET", u, struct{}{}, &resp)
+	return
+}
+
+// RoomAlias requests that the server resolve a room alias to a room ID.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-directory-room-roomalias
+func (cli *Client) RoomAlias(roomAlias string) (resp *RespRoomAlias, err error) {
+	u := cli.BuildURL("directory", "room", roomAlias)
+	err = cli.MakeRequest("GET", u, struct{}{}, &resp)
+	return
+}
+
+// EmailRequestToken requests email from homeserver so that it email be bound to existing account after validation.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#post-matrix-client-r0-account-3pid-email-requesttoken
+func (cli *Client) Account3PidEmailRequestToken(req ReqEmailRequestToken) (resp *RespEmailRequestToken, err error) {
+	u := cli.BuildURL("account", "3pid", "email", "requestToken")
+	err = cli.MakeRequest("POST", u, req, &resp)
+	return
+}
+
+// GetAccountData gets some account_data for the client.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-user-userid-account-data-type
+func (cli *Client) GetAccountData(req ReqGetAccountData) (resp RespAccountData, err error) {
+	resp = make(RespAccountData)
+	u := cli.BuildURL("user", cli.UserID, "account_data", req.Type)
+	err = cli.MakeRequest("GET", u, nil, &resp)
+	return
+}
+
+// PutAccountData sets some account_data for the client.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#put-matrix-client-r0-user-userid-account-data-type
+func (cli *Client) PutAccountData(req ReqPutAccountData) (err error) {
+	u := cli.BuildURL("user", cli.UserID, "account_data", req.Type)
+	err = cli.MakeRequest("PUT", u, req.Data, nil)
+	return
+}
+
+// GetDevices gets information about all devices for the current user.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-devices
+func (cli *Client) GetDevices() (resp RespGetDevices, err error) {
+	resp.Devices = make([]Device, 0)
+	u := cli.BuildURL("devices")
+	err = cli.MakeRequest("GET", u, nil, &resp)
+	return
+}
+
+// GetThreePID gets a list of the third party identifiers that the homeserver has associated with the user's account.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-account-3pid
+func (cli *Client) GetThreePID() (resp RespGetThreePID, err error) {
+	u := cli.BuildURL("account", "3pid")
+	err = cli.MakeRequest("GET", u, nil, &resp)
+	return
+}
+
+// Available checks to see if a username is available, and valid, for the server.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#get-matrix-client-r0-register-available
+func (cli *Client) Available(username string) (err error) {
+	u := cli.BuildURLWithQuery(
+		[]string{"register", "available"},
+		map[string]string{
+			"username": username,
+		})
+	err = cli.MakeRequest("GET", u, nil, nil)
+	return
+}
+
+// PowerLevels gets most recent m.room.power_levels event.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#m-room-power-levels
+func (cli *Client) PowerLevels(roomID string) (resp PowerLevels, err error) {
+	err = cli.StateEvent(roomID, "m.room.power_levels", "", &resp)
+	return
+}
+
+// SendPowerLevels sends m.room.power_levels event.
+// See https://matrix.org/docs/spec/client_server/r0.6.1#m-room-power-levels
+func (cli *Client) SendPowerLevels(roomID string, pl PowerLevels) (*RespSendEvent, error) {
+	return cli.SendStateEvent(roomID, "m.room.power_levels", "", pl)
+}
+
 func txnID() string {
 	return "go" + strconv.FormatInt(time.Now().UnixNano(), 10)
 }
